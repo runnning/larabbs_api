@@ -10,6 +10,7 @@ use App\Observers\LinkObserver;
 use App\Observers\ReplyObserver;
 use App\Observers\TopicObserver;
 use App\Observers\UserObserver;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -39,5 +40,7 @@ class AppServiceProvider extends ServiceProvider
         Reply::observe(ReplyObserver::class);
         Link::observe(LinkObserver::class);
         \Illuminate\Pagination\Paginator::useBootstrap();
+
+        JsonResource::withoutWrapping();
     }
 }
