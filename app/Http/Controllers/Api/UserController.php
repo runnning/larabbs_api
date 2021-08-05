@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Cache;
 
 class UserController extends Controller
 {
+    /**
+     * @throws AuthenticationException
+     */
     public function store(UserRequest $request): UserResource
     {
         $verifyData=Cache::get($request->verification_key);
