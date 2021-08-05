@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\VerificationCodeRequest;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
@@ -13,6 +14,18 @@ use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 class VerificationCodesController extends Controller
 {
     public function store(VerificationCodeRequest $request,EasySms $easySms){
+
+        $captchaData=Cache::get($request->captcha_key);
+        if(!$captchaData){
+            abort(403,'图片验证码已失效');
+        }
+
+        if(!hash_equals(strtolower($captchaData['code']),$request->captcha_code)){
+            //验证错误就清除
+            Cache::forget($request->captcha_key);
+            throw new AuthenticationException('验证码错误');
+        }
+
         $phone=$request->phone;
 
         if(!app()->environment('production')){
@@ -38,6 +51,8 @@ class VerificationCodesController extends Controller
         $expiredAt=now()->addMinutes(5);
         //缓存验证码5分钟过期.
         Cache::put($key,['phone'=>$phone,'code'=>$code],$expiredAt);
+        //清除验证码缓存
+        Cache::forget($request->captcha_key);
 
         return response()->json([
             'key'=>$key,
