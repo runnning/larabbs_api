@@ -49,6 +49,8 @@ class User extends Authenticatable implements MustVerifyEmailContract
         'introduction',
         'avatar',
         'phone',
+        'weixin_openid',
+        'weixin_unionid'
     ];
 
     /**
