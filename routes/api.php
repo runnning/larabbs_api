@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\AuthorizationsController;
 use App\Http\Controllers\Api\ImageController;
+use App\Http\Controllers\Api\CategoriesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +62,9 @@ Route::prefix('v1')
                 //某个用户详情
                 Route::get('users/{user}',[UserController::class,'show'])
                     ->name('users.show');
-
+                //分类列表
+                Route::get('categories',[CategoriesController::class,'index'])
+                    ->name('categories.index');
                 //登录后可以访问的接口
                 Route::middleware('auth:api')->group(function (){
                     //当前登录用户信息
