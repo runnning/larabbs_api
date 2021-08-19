@@ -29,6 +29,7 @@ Route::prefix('v1')
     ->namespace('Api')
     ->name('api.v1.')
     ->group(function (){
+
         Route::middleware('throttle:'. config('api.rate_limits.sign'))
             ->group(function (){
                 //图片验证码
@@ -65,6 +66,10 @@ Route::prefix('v1')
                 //分类列表
                 Route::get('categories',[CategoriesController::class,'index'])
                     ->name('categories.index');
+                //话题列表、详情
+                Route::resource('topics', '\App\Http\Controllers\Api\TopicsController')->only([
+                    'index','show'
+                ]);
                 //登录后可以访问的接口
                 Route::middleware('auth:api')->group(function (){
                     //当前登录用户信息
@@ -76,6 +81,10 @@ Route::prefix('v1')
                     //上传图片
                     Route::post('images',[ImageController::class,'store'])
                         ->name('images.store');
+                    //发布话题
+                    Route::resource('topics','\App\Http\Controllers\Api\TopicsController')->only([
+                        'store','update','destroy'
+                    ]);
                 });
 
             });
