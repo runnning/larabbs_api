@@ -44,8 +44,15 @@ class TopicsController extends Controller
     }
 
 
-    public function destroy($id)
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Topic $topic)
     {
-        //
+        $this->authorize('destroy',$topic);
+
+        $topic->delete();
+
+        return response(null,204);
     }
 }
