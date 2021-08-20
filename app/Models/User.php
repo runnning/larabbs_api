@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmailContract,JWTSubject
 
     public function isAuthorOf($model): bool
     {
-        return $this->id==$model->user_id;
+        return $this->id ===$model->user_id;
     }
 
     public function replies(){

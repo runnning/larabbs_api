@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\CaptchasController;
 use App\Http\Controllers\Api\AuthorizationsController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CategoriesController;
+use App\Http\Controllers\Api\TopicsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,10 +27,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::prefix('v1')
-    ->namespace('Api')
     ->name('api.v1.')
     ->group(function (){
-
         Route::middleware('throttle:'. config('api.rate_limits.sign'))
             ->group(function (){
                 //图片验证码
@@ -67,7 +66,7 @@ Route::prefix('v1')
                 Route::get('categories',[CategoriesController::class,'index'])
                     ->name('categories.index');
                 //话题列表、详情
-                Route::resource('topics', '\App\Http\Controllers\Api\TopicsController')->only([
+                Route::resource('topics',TopicsController::class)->only([
                     'index','show'
                 ]);
                 //登录后可以访问的接口
@@ -82,8 +81,8 @@ Route::prefix('v1')
                     Route::post('images',[ImageController::class,'store'])
                         ->name('images.store');
                     //发布话题
-                    Route::resource('topics','\App\Http\Controllers\Api\TopicsController')->only([
-                        'store','update','destroy'
+                    Route::resource('topics',TopicsController::class)->only([
+                        'destroy','store','update'
                     ]);
                 });
 

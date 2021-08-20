@@ -31,10 +31,16 @@ class TopicsController extends Controller
     }
 
 
-
-    public function update(Request $request, $id)
+    /**
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update(TopicRequest $request, Topic $topic): TopicResource
     {
-        //
+        $this->authorize('update', $topic);
+
+        $topic->update($request->all());
+
+        return new TopicResource($topic);
     }
 
 
