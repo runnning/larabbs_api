@@ -41,7 +41,7 @@ class GenerateToken extends Command
         if(!$user){
             return $this->error('用户不存在');
         }
-        
+
         //一年以后过期,单位分钟
         $ttl=365*24*60;
         $this->info(auth('api')->setTTl($ttl)->login($user));
