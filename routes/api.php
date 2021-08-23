@@ -9,6 +9,7 @@ use App\Http\Controllers\Api\AuthorizationsController;
 use App\Http\Controllers\Api\ImageController;
 use App\Http\Controllers\Api\CategoriesController;
 use App\Http\Controllers\Api\TopicsController;
+use App\Http\Controllers\Api\RepliesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,9 @@ Route::prefix('v1')
                     Route::resource('topics',TopicsController::class)->only([
                         'destroy','store','update'
                     ]);
+                    //发布回复
+                    Route::post('topics/{topic}/replies',[RepliesController::class,'store'])
+                        ->name('topics.replies.store');
                 });
 
             });
