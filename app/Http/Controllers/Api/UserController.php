@@ -57,4 +57,10 @@ class UserController extends Controller
         $user->update($attributes);
         return (new UserResource($user))->showSensitiveFields();
     }
+
+    public function activedIndex(User $user): \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+    {
+        UserResource::wrap('data');
+        return UserResource::collection($user->getActiveUsers());
+    }
 }

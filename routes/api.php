@@ -85,6 +85,8 @@ Route::prefix('v1')
                 //资源推荐
                 Route::get('links',[LinkController::class,'index'])
                     ->name('links.index');
+                Route::get('actived/users',[UserController::class,'activedIndex'])
+                    ->name('actived.users.index');
                 //登录后可以访问的接口
                 Route::middleware('auth:api')->group(function (){
                     //当前登录用户信息
