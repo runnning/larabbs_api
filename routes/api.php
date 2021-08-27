@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\TopicsController;
 use App\Http\Controllers\Api\RepliesController;
 use App\Http\Controllers\Api\NotificationsController;
 use App\Http\Controllers\Api\PermissionsController;
+use App\Http\Controllers\Api\LinkController;
 
 /*
 |--------------------------------------------------------------------------
@@ -81,6 +82,9 @@ Route::prefix('v1')
                 //某个用户的回复列表
                 Route::get('users/{user}/replies',[RepliesController::class,'userIndex'])
                     ->name('users.replies.index');
+                //资源推荐
+                Route::get('links',[LinkController::class,'index'])
+                    ->name('links.index');
                 //登录后可以访问的接口
                 Route::middleware('auth:api')->group(function (){
                     //当前登录用户信息
@@ -114,6 +118,5 @@ Route::prefix('v1')
                     Route::get('user/permissions',[PermissionsController::class,'index'])
                         ->name('user.permissions.index');
                 });
-
             });
 });
