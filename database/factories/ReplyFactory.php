@@ -9,12 +9,12 @@ class ReplyFactory extends Factory
 {
     protected $model = Reply::class;
 
-    public function definition()
+    public function definition(): array
     {
         return [
             'content'=>$this->faker->sentence(),
-            'topic_id'=>rand(1,100),
-            'user_id'=>rand(1,10),
+            'topic_id'=>random_int(1,100),
+            'user_id'=>random_int(1,10),
         ];
     }
 }
