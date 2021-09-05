@@ -12,6 +12,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmailContract
@@ -23,6 +24,32 @@ class User extends Authenticatable implements MustVerifyEmailContract
     use Notifiable{
         notify as protected laravelNotify;
     }
+    use HasApiTokens;
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'introduction',
+        'avatar',
+        'phone',
+        'weixin_openid',
+        'weixin_unionid',
+        'registration_id'
+    ];
+
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'weixin_openid',
+        'weixin_unionid'
+    ];
+
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     public function notify($instance)
     {
@@ -36,44 +63,6 @@ class User extends Authenticatable implements MustVerifyEmailContract
         }
         $this->laravelNotify($instance);
     }
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'introduction',
-        'avatar',
-        'phone',
-        'weixin_openid',
-        'weixin_unionid',
-        'registration_id'
-    ];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-        'weixin_openid',
-        'weixin_unionid'
-    ];
-
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function topics(){
         return $this->hasMany(Topic::class);
@@ -112,5 +101,11 @@ class User extends Authenticatable implements MustVerifyEmailContract
             $path=config('app.url')."/uploads/images/avatars/$path";
         }
         $this->attributes['avatar']=$path;
+    }
+
+    public function findForPassport($username){
+        filter_var($username,FILTER_VALIDATE_EMAIL)?
+        $credentials['email']=$username:$credentials['phone']=$username;
+        return self::where($credentials)->first();
     }
 }
