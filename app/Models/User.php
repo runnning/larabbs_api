@@ -13,9 +13,8 @@ use Illuminate\Auth\MustVerifyEmail as MustVerifyEmailTrait;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
-use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements MustVerifyEmailContract,JWTSubject
+class User extends Authenticatable implements MustVerifyEmailContract
 {
     use HasFactory,MustVerifyEmailTrait;
     use ActiveUserHelper;
@@ -113,16 +112,5 @@ class User extends Authenticatable implements MustVerifyEmailContract,JWTSubject
             $path=config('app.url')."/uploads/images/avatars/$path";
         }
         $this->attributes['avatar']=$path;
-    }
-
-
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims(): array
-    {
-        return [];
     }
 }

@@ -6,6 +6,7 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Horizon\Horizon;
+use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -33,10 +34,17 @@ class AuthServiceProvider extends ServiceProvider
             // 动态返回模型对应的策略名称，如：// 'App\Model\User' => 'App\Policies\UserPolicy',
             return 'App\Policies\\'.class_basename($modelClass).'Policy';
         });
-        
+
         Horizon::auth(function ($request){
             //是否是站长
             return Auth::user()->hasRole('Founder');
         });
+
+        //Passport的路由
+        Passport::routes();
+        //access_token过期时间
+        Passport::tokensExpireIn(now()->addDays(15));
+        //refreshTokens过期时间
+        Passport::refreshTokensExpireIn(now()->addDays(30));
     }
 }
