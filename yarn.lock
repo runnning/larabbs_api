@@ -1146,6 +1146,11 @@
   dependencies:
     miniprogram-api-typings "^2.10.3-1"
 
+"@wepy/use-promisify@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.nlark.com/@wepy/use-promisify/download/@wepy/use-promisify-2.1.0.tgz#a6b9781082802d977de620ee760a5ab3a228b60a"
+  integrity sha1-prl4EIKALZd95iDudgpas6Iotgo=
+
 "@wepy/x@^2.0.2":
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/@wepy/x/download/@wepy/x-2.1.0.tgz#d7a0d61f6db096ce0cf6b83143dd5fa3a328c7b3"

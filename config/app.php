@@ -179,6 +179,8 @@ return [
         App\Providers\EasySmsServiceProvider::class,
         //Jpush消息推送
         App\Providers\JpushServiceProvider::class,
+        //ide-helper提示
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*
