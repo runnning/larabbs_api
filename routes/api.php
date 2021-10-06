@@ -56,10 +56,10 @@ Route::prefix('v1')
                 Route::post('weapp/authorizations',[AuthorizationsController::class,'weappStore'])
                   ->name('weapp.authorizations.store');
                 //刷新token
-                Route::put('authorizations',[AuthorizationsController::class,'update'])
+                Route::put('authorizations/current',[AuthorizationsController::class,'update'])
                     ->name('authorizations.update');
                 //删除token
-                Route::delete('authorizations',[AuthorizationsController::class,'destroy'])
+                Route::delete('authorizations/current',[AuthorizationsController::class,'destroy'])
                     ->name('authorizations.destroy');
             });
 
