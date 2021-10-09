@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\Api\VerificationCodeRequest;
 use Illuminate\Auth\AuthenticationException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Str;
 use Overtrue\EasySms\EasySms;
@@ -12,7 +11,11 @@ use Overtrue\EasySms\Exceptions\NoGatewayAvailableException;
 
 class VerificationCodesController extends Controller
 {
-    public function store(VerificationCodeRequest $request,EasySms $easySms){
+  /**
+   * @throws AuthenticationException
+   * @throws \Overtrue\EasySms\Exceptions\InvalidArgumentException
+   */
+  public function store(VerificationCodeRequest $request, EasySms $easySms){
 
         $captchaData=Cache::get($request->captcha_key);
         if(!$captchaData){
@@ -55,7 +58,7 @@ class VerificationCodesController extends Controller
 
         return response()->json([
             'key'=>$key,
-            'expired_at'=>$expiredAt->toDateString(),
+            'expired_at'=>$expiredAt->toDateTimeString(),
         ])->setStatusCode(201);
     }
 }
