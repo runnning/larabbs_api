@@ -2,7 +2,7 @@ import wepy from '@wepy/core'
 import * as auth from '@/utils/auth'
 import isEmpty from 'lodash/isEmpty'
 import {getCurrentUser} from "@/api/user";
-import {login,logout,refresh} from "@/api/auth";
+import {login,logout,refresh,register} from "@/api/auth";
 
 const getDefaultState = () => {
   return {
@@ -70,6 +70,15 @@ const actions = {
     //清空storage
     auth.logout()
     commit('resetState')
+  },
+
+  async register({dispatch},params={}){
+    const loginData=await wepy.wx.login()
+    params.code=loginData.code
+
+    await register(params)
+
+    await dispatch('login')
   }
 }
 
