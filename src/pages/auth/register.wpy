@@ -285,7 +285,7 @@ wepy.page({
         //跳转到我的页面
         setTimeout(async ()=>{
           wx.switchTab({
-            url:'/pages/user'
+            url:'/pages/users/me'
           })
         },2000)
       }catch (err){

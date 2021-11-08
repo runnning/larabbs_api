@@ -100,6 +100,8 @@ Route::prefix('v1')
                     Route::get('user',[UserController::class,'me'])
                         ->name('user.show');
                     //编辑登录用户信息
+                    Route::put('user',[UserController::class,'update'])
+                        ->name('user.patch');
                     Route::patch('user',[UserController::class,'update'])
                         ->name('user.update');
                     //上传图片
