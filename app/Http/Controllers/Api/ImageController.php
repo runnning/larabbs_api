@@ -16,7 +16,7 @@ class ImageController extends Controller
 
         $user=$request->user();
 
-        $size=$request->type=='avatar'?416:1024;
+        $size=$request->type === 'avatar'?416:1024;
 
         $result=$uploader->save($request->image,Str::plural($request->type),$user->id,$size);
 
