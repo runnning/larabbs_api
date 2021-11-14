@@ -1,0 +1,19 @@
+<template>
+  <span>{{formatDatetime}}</span>
+</template>
+<script>
+  import wepy from "@wepy/core";
+  import {difForHumans} from "@/utils/util";
+
+  wepy.component({
+    //父页面传入,需要格式化的时间
+    props:{
+      datetime:String,
+    },
+    computed:{
+      formatDatetime:function () {
+        return difForHumans(this.datetime)
+      }
+    }
+  })
+</script>
