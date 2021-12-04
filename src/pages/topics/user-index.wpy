@@ -1,6 +1,6 @@
 <template>
   <div class="page__bd">
-    <topic-list :topics="topics" :no-more-data="noMoreData"></topic-list>
+    <topic-list :topics="resourceData" :no-more-data="noMoreData"></topic-list>
   </div>
 </template>
 <config>
