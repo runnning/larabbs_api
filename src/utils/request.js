@@ -57,7 +57,7 @@ const checkToken=async ()=>{
   }
 }
 
-//普通请求
+//验证请求
 const authRequest=async (url,options={},showLoading=true)=>{
   await checkToken()
 
