@@ -5,18 +5,18 @@
 </template>
 <config>
 {
-navigationBarTitleText: '用户回复列表',
-enablePullDownRefresh: true,
-usingComponents: {
-"reply-list": "~@/components/reply-list"
-}
+  navigationBarTitleText: '用户回复列表',
+  enablePullDownRefresh: true,
+  usingComponents: {
+    "reply-list": "~@/components/reply-list"
+  }
 }
 </config>
 <script>
 import wepy from '@wepy/core'
 import eventHub from '@/common/eventHub'
 import { getUserReplies } from '@/api/reply'
-import listRefresh from '@/mixins/list-refresh.js'
+import listRefresh from '@/mixins/list-refresh'
 
 wepy.page({
   mixins: [ listRefresh ],
