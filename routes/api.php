@@ -123,8 +123,11 @@ Route::prefix('v1')
                     //通知统计
                     Route::get('notifications/stats',[NotificationsController::class,'stats'])
                         ->name('notifications.stats');
+                    //标记消息通知为已读
                     Route::patch('user/read/notifications',[NotificationsController::class,'read'])
                         ->name('user.notifications.read');
+                    Route::put('user/read/notifications',[NotificationsController::class,'read'])
+                      ->name('user.notifications.read.put');
                     //当前登录用户权限
                     Route::get('user/permissions',[PermissionsController::class,'index'])
                         ->name('user.permissions.index');

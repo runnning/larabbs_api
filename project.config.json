@@ -34,13 +34,13 @@
     "packNpmRelationList": [],
     "minifyWXSS": false,
     "disableUseStrict": false,
+    "minifyWXML": true,
     "showES6CompileOption": false,
-    "useCompilerPlugins": false,
-    "minifyWXML": true
+    "useCompilerPlugins": false
   },
   "compileType": "miniprogram",
   "appid": "wxb886252655a67e66",
-  "projectname": "larabbs",
+  "projectname": "mybbs",
   "miniprogramRoot": "weapp/",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},

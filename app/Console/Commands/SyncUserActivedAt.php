@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 class SyncUserActivedAt extends Command
 {
 
-    protected $signature = 'larabbs:sync-user-actived-at';
+    protected $signature = 'mybbs:sync-user-actived-at';
 
     protected $description = '将用户最后登入时间从Redis同步到数据库中';
 

@@ -9,7 +9,7 @@ class CalculateActiveUser extends Command
 {
 
     //供我们调用命令
-    protected $signature = 'larabbs:calculate-active-user';
+    protected $signature = 'mybbs:calculate-active-user';
 
 
     //命令描述

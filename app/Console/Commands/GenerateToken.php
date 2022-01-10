@@ -12,7 +12,7 @@ class GenerateToken extends Command
      *
      * @var string
      */
-    protected $signature = 'larabbs:generate-token';
+    protected $signature = 'mybbs:generate-token';
 
     /**
      * The console command description.
