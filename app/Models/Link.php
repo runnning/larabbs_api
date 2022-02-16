@@ -29,8 +29,8 @@ class Link extends Model
 {
     use HasFactory;
     protected $fillable=['title','link'];
-    public $cache_key='larabbs_link';
-    protected $cache_expire_in_seconds=1440*60;
+    public string $cache_key='larabbs_link';
+    protected int $cache_expire_in_seconds=1440*60;
 
     public function getAllCached(){
         // 尝试从缓存中取出 cache_key 对应的数据。如果能取到，便直接返回数据。

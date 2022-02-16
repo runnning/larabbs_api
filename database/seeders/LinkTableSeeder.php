@@ -12,7 +12,7 @@ class LinkTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         Link::factory()->times(6)->create();
     }

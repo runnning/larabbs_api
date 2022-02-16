@@ -63,9 +63,9 @@ return array(
      * 此回调函数需要返回 true 或 false ，用来检测当前用户是否有权限访问后台。
      * `true` 为通过，`false` 会将页面重定向到 `login_path` 选项定义的 URL 中。
      */
-    'permission' => function () {
+    'permission' => static function () {
         // 只要是能管理内容的用户，就允许访问后台
-        return Auth::check() && Auth::user()->can('manage_contents');
+        return Auth::check() && Auth::user()?->can('manage_contents');
     },
 
     /*

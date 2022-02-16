@@ -1,6 +1,11 @@
 <?php
 use Illuminate\Support\Str;
-function route_class(){
+
+/**
+ * 路由名转化为路由类名
+*/
+function route_class(): array|string|null
+{
     return str_replace('.','-',Route::currentRouteName());
 }
 
@@ -35,6 +40,9 @@ function model_link($title,$model,$prefix=''): string
     return '<a href="'.$url.'" target="_blank">'.$title.'</a>';
 }
 
+/**
+ * 模型复数命名
+*/
 function model_plural_name($model): string
 {
     //从实体中获取完整类名,例如：App\Models\User

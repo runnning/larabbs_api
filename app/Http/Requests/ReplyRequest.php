@@ -4,15 +4,9 @@ namespace App\Http\Requests;
 
 class ReplyRequest extends Request
 {
-    public function rules()
+    public function rules(): array
     {
        return ['content'=>'required|min:2'];
     }
 
-    public function messages()
-    {
-        return [
-            // Validation messages
-        ];
-    }
 }

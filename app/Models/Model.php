@@ -16,6 +16,9 @@ use Illuminate\Database\Eloquent\Model as EloquentModel;
  */
 class Model extends EloquentModel
 {
+    /**
+     * 公共局部作用域
+    */
     public function scopeRecent($query)
     {
         return $query->orderBy('id', 'desc');

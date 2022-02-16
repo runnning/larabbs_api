@@ -25,10 +25,13 @@ class TopicReplied extends Notification implements ShouldQueue
     public function via($notifiable): array
     {
         // 开启通知的频道
-        return ['database'];
-        //return ['database','mail',JPushChannel::class];
+        //return ['database'];
+        return ['database','mail',JPushChannel::class];
     }
 
+    /**
+     *极光推送
+    */
     public function toJPush($notifiable,PushPayload $payload): PushPayload
     {
         return $payload
@@ -67,7 +70,7 @@ class TopicReplied extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toArray($notifiable)
+    public function toArray($notifiable): array
     {
         return [
             //

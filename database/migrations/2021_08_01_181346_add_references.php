@@ -8,19 +8,20 @@ class AddReferences extends Migration
 {
     /**
      * Run the migrations.
+     * 添加外键约束
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('topics',function (Blueprint $table){
+        Schema::table('topics', static function (Blueprint $table){
             //当user_id对应users表被删除时,删除此条数据
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
         });
-        Schema::table('replies',function (Blueprint $table){
+        Schema::table('replies', static function (Blueprint $table){
             //当user_id对应的users表数据被删除时,删除此条数据
             $table->foreign('user_id')
                 ->references('id')
@@ -40,13 +41,13 @@ class AddReferences extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::table('topics',function (Blueprint $table){
+        Schema::table('topics', static function (Blueprint $table){
             //移除外键约束
             $table->dropForeign(['user_id']);
         });
-        Schema::table('replies',function (Blueprint $table){
+        Schema::table('replies', static function (Blueprint $table){
             $table->dropForeign(['user_id']);
             $table->dropForeign(['topic_id']);
         });

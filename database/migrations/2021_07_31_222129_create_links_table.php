@@ -11,9 +11,9 @@ class CreateLinksTable extends Migration
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('links', function (Blueprint $table) {
+        Schema::create('links', static function (Blueprint $table) {
             $table->increments('id');
             $table->string('title')->comment('资源的描述')->index();
             $table->string('link')->comment('资源链接')->index();
@@ -26,7 +26,7 @@ class CreateLinksTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('links');
     }

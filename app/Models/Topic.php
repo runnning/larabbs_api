@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Topic
@@ -67,28 +68,36 @@ class Topic extends Model
       return $this->hasMany(Reply::class);
     }
 
-    public function scopeWithOrder($query, $order): void
+    /**
+     * 局部作用域
+    */
+    public function scopeWithOrder(Builder $query,?string $order): void
     {
         // 不同的排序，使用不同的数据读取逻辑
-        switch ($order) {
-            case 'recent':
-                $query->recent();
-                break;
-
-            default:
-                $query->recentReplied();
-                break;
+//        switch ($order) {
+//            case 'recent':
+//                $query->recent();
+//                break;
+//
+//            default:
+//                $query->recentReplied();
+//                break;
+//        }
+        if($order==='recent'){
+          $query->recent();
+        }else{
+          $query->recentReplied();
         }
     }
 
-    public function scopeRecentReplied($query)
+    public function scopeRecentReplied(Builder $query): Builder
     {
         // 当话题有新回复时，更新话题模型的 reply_count 属性，
         // 此时会自动触发框架对数据模型 updated_at 时间戳的更新
         return $query->orderBy('updated_at', 'desc');
     }
 
-    public function scopeRecent($query)
+    public function scopeRecent($query):Builder
     {
         // 按照创建时间排序
         return $query->orderBy('created_at', 'desc');

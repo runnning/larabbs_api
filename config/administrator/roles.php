@@ -6,19 +6,20 @@ return [
     'single'=>'角色',
     'model'=>Role::class,
 
-    'permission'=>function(){
-        return Auth::user()->can('manage_users');
+    'permission'=> static function(){
+        return Auth::user()?->can('manage_users');
     },
     'columns'=>[
         'id'=>[
           'title'=>'ID',
         ],
         'name'=>[
-          'title'=>'标识'
+          'title'=>'角色'
         ],
         'permissions'=>[
           'title'=>'权限',
-          'output'=>function($value,$model){
+          'output'=> static function($value, $model){
+                //加载权限模型
                 $model->load('permissions');
                 $result=[];
                 foreach ($model->permissions as $permission){
@@ -30,7 +31,7 @@ return [
         ],
         'operation'=>[
             'title'=>'管理',
-            'output'=>function($value,$model){
+            'output'=> static function($value, $model){
                 return $value;
             },
             'sortable'=>false,
@@ -39,7 +40,7 @@ return [
 
     'edit_fields'=>[
         'name'=>[
-            'title'=>'标识',
+            'title'=>'角色',
         ],
         'permissions'=>[
             'type'=>'relationship',
@@ -64,7 +65,7 @@ return [
 
     // 新建和编辑时的表单验证规则
     'messages'=>[
-        'name.required'=>'标识不能为空',
-        'name.unique'=>'标识已经存在',
+        'name.required'=>'角色不能为空',
+        'name.unique'=>'角色已经存在',
     ]
 ];

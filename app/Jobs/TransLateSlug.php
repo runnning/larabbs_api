@@ -23,23 +23,25 @@ class TransLateSlug implements ShouldQueue
      */
 
     protected $topic;
+
     public function __construct(Topic $topic)
     {
         //队列任务构造器接受了Eloquent 模型，将会只序列化模型ID
         $this->topic=$topic;
     }
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+  /**
+   * Execute the job.
+   *
+   * @return void
+   * @throws \GuzzleHttp\Exception\GuzzleException
+   */
+    public function handle(): void
     {
         //请求百度API接口进行翻译
         $slug=app(SlugTranslateHandler::class)->translate($this->topic->title);
 
-        //避免模型监控器死循环调用,使用Db类对数据库进行操作
+        //为了避免模型监控器死循环调用,使用Db类对数据库进行操作
         DB::table('topics')->where('id',$this->topic->id)->update(['slug'=>$slug]);
     }
 }

@@ -15,17 +15,20 @@ class RepliesController extends Controller
         $this->middleware('auth');
     }
 
-	public function store(ReplyRequest $request,Reply $reply)
-	{
+	public function store(ReplyRequest $request,Reply $reply): \Illuminate\Http\RedirectResponse
+  {
 	    $reply->content=$request->input('content');
 	    $reply->user_id=Auth::id();
 	    $reply->topic_id=$request->topic_id;
 	    $reply->save();
-		return redirect()->to($reply->topic->link())->with('success', '评论创建成功!');
+		  return redirect()->to($reply->topic->link())->with('success', '评论创建成功!');
 	}
 
-	public function destroy(Reply $reply)
-	{
+  /**
+   * @throws \Illuminate\Auth\Access\AuthorizationException
+   */
+  public function destroy(Reply $reply): \Illuminate\Http\RedirectResponse
+  {
 		$this->authorize('destroy', $reply);
 		$reply->delete();
 

@@ -7,7 +7,7 @@ use App\Models\Reply;
 
 class RepliesTableSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
         Reply::factory()->times(1000)->create();
     }

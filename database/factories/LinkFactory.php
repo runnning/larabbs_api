@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Link;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use JetBrains\PhpStorm\ArrayShape;
 
 class LinkFactory extends Factory
 {
@@ -19,7 +20,8 @@ class LinkFactory extends Factory
      *
      * @return array
      */
-    public function definition()
+    #[ArrayShape(['title' => "string", 'link' => "string"])]
+    public function definition(): array
     {
         return [
             'title'=>$this->faker->name,

@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
+    public function run(): void
     {
         //生成数据集合
         User::factory()->count(10)->create();

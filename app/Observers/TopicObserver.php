@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class TopicObserver
 {
 
-    public function saving(Topic $topic)
+    public function saving(Topic $topic): void
     {
         //xss过滤
         $topic->body=clean($topic->body,'user_topic_body');
@@ -22,15 +22,17 @@ class TopicObserver
 
 
     }
-    public function saved(Topic $topic){
+    public function saved(Topic $topic): void
+    {
         //如果slug字段无内容,即使使用翻译器对title进行翻译
         if(!$topic->slug){
-            //推送任务到队列
+            //消息队列:推送任务到队列
             dispatch(new TransLateSlug($topic));
         }
     }
 
-    public function deleted(Topic $topic){
+    public function deleted(Topic $topic): void
+    {
         DB::table('replies')->where('topic_id', $topic->id)->delete();
     }
 }

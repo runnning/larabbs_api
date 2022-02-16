@@ -10,22 +10,25 @@ use App\Notifications\TopicReplied;
 
 class ReplyObserver
 {
-    public function created(Reply $reply)
+    public function created(Reply $reply): void
     {
         //命令行运行迁移时不做这些操作
         if(!app()->runningInConsole()){
             $reply->topic->updateReplyCount();
-            // 通知话题作者有新的评论
+            // 消息通知:通知话题作者有新的评论
             $reply->topic->user->notify(new TopicReplied($reply));
         }
     }
 
-    public function creating(Reply $reply)
+    /**
+     * xss过滤
+    */
+    public function creating(Reply $reply): void
     {
         $reply->content = clean($reply->content, 'user_topic_body');
     }
 
-    public function deleted(Reply $reply)
+    public function deleted(Reply $reply): void
     {
         $reply->topic->updateReplyCount();
     }

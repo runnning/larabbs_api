@@ -15,12 +15,12 @@ class RecordLastActivedTime
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle(Request $request, Closure $next)
+    public function handle(Request $request, Closure $next): mixed
     {
         //如果登入用户的话
         if(Auth::check()){
             //记录最后登入时间
-            Auth::user()->recordLastActivedAt();
+            Auth::user()?->recordLastActivedAt();
         }
 
         return $next($request);

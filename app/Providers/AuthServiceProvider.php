@@ -25,18 +25,19 @@ class AuthServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
         $this->registerPolicies();
         // 修改策略自动发现的逻辑
-        Gate::guessPolicyNamesUsing(function ($modelClass) {
+        Gate::guessPolicyNamesUsing(static function ($modelClass) {
             // 动态返回模型对应的策略名称，如：// 'App\Model\User' => 'App\Policies\UserPolicy',
             return 'App\Policies\\'.class_basename($modelClass).'Policy';
         });
-        
-        Horizon::auth(function ($request){
+
+        //定义Horizon访问策略
+        Horizon::auth(static function ($request){
             //是否是站长
-            return Auth::user()->hasRole('Founder');
+            return Auth::user()?->hasRole('Founder');
         });
     }
 }

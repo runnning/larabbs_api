@@ -9,7 +9,7 @@ class TopicFactory extends Factory
 {
     protected $model = Topic::class;
 
-    public function definition()
+    public function definition(): array
     {
         $sentence=$this->faker->sentence();
         return [

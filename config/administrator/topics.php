@@ -12,14 +12,14 @@ return [
         'title'=>[
             'title'=>'话题',
             'sortable'=>false,
-            'output'=>function($value,$model){
+            'output'=> static function($value, $model){
                 return '<div style="max-width: 260px">'.model_link($value,$model).'</div>';
             },
         ],
         'user'=>[
             'title'=>'作者',
             'sortable'=>false,
-            'output'=>function($value,$model){
+            'output'=> static function($value, $model){
                 $avatar=$model->user->avatar;
                 $value=empty($avatar)?'N/A':'<img src="'.$avatar.'" style="height:22px;width:22px">'.$model->user->name;
                 return model_link($value,$model->user);
@@ -28,7 +28,7 @@ return [
         'category'=>[
             'title'=>'分类',
             'sortable'=>false,
-            'output'=>function($value,$model){
+            'output'=> static function($value, $model){
                 return model_admin_link(e($model->category->name),$model->category);
             }
         ],

@@ -122,10 +122,13 @@ class User extends Authenticatable implements MustVerifyEmailContract,JWTSubject
     'email_verified_at' => 'datetime',
   ];
 
-    public function notify($instance)
+    /**
+     * 重写notify
+    */
+    public function notify($instance): void
     {
         //如果通知的人是当前用户,就不必通知了！
-        if($this->id==Auth::id()){
+        if($this->id===Auth::id()){
             return;
         }
         //只有数据库类型通知才需要提醒,直接发送Email或者其他都Pass
@@ -135,39 +138,44 @@ class User extends Authenticatable implements MustVerifyEmailContract,JWTSubject
         $this->laravelNotify($instance);
     }
 
-    public function topics(){
+    public function topics(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Topic::class);
     }
 
-    public function isAuthorOf($model): bool
+    public function isAuthorOf(Reply|Topic $model): bool
     {
         return $this->id ===$model->user_id;
     }
 
-    public function replies(){
+    public function replies(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
         return $this->hasMany(Reply::class);
     }
 
     //通知状态设为已读,并清空未读消息。
-    public function markAsRead(){
+    public function markAsRead(): void
+    {
         $this->notification_count=0;
         $this->save();
         $this->unreadNotifications->markAsRead();
     }
 
 
-    public function setPasswordAttribute($value){
+    public function setPasswordAttribute($value): void
+    {
         // 如果值的长度等于 60，即认为是已经做过加密的情况
-        if(strlen($value)!=60){
+        if(strlen($value)!==60){
             // 不等于 60，做密码加密处理
             $value=bcrypt($value);
         }
         $this->attributes['password']=$value;
     }
 
-    public function setAvatarAttribute($path){
+    public function setAvatarAttribute($path): void
+    {
         // 如果不是 `http` 子串开头，那就是从后台上传的，需要补全 URL
-        if(!Str::startsWith($path,'http')){
+        if(!Str::startsWith($path,'http')||!Str::startsWith($path,'https')){
             //拼接完整的URL
             $path=config('app.url')."/uploads/images/avatars/$path";
         }

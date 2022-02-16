@@ -13,7 +13,7 @@ class SyncUserActivedAt extends Command
     protected $description = '将用户最后登入时间从Redis同步到数据库中';
 
 
-    public function handle(User $user)
+    public function handle(User $user): void
     {
         $user->syncUserActivedAt();
         $this->info('同步成功');

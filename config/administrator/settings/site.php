@@ -5,9 +5,9 @@ return [
     'title'=>'站点设置',
 
     //访问权限判断
-    'permission'=>function(){
+    'permission'=> static function(){
         //只允许站长管理站点配置
-        return Auth::user()->hasRole('Founder');
+        return Auth::user()?->hasRole('Founder');
     },
     //站点配置的表单
     'edit_fields'=>[
@@ -47,9 +47,9 @@ return [
         'contact_email.email'=>'请填写正确的联系人邮箱格式.'
     ],
     // 数据即将保存时触发的钩子，可以对用户提交的数据做修改
-    'before_save'=>function(&$data){
+    'before_save'=> static function(&$data){
         // 为网站名称加上后缀，加上判断是为了防止多次添加
-        if(strpos($data['site_name'],'Powered by YanWN')===false) {
+        if(!str_contains($data['site_name'], 'Powered by YanWN')) {
             $data['site_name'].='- Powered by YanWN';
         }
     },
@@ -66,7 +66,7 @@ return [
                 'error'=>'缓存清空时出错!',
             ],
             // 动作执行代码，注意你可以通过修改 $data 参数更改配置信息
-            'action'=>function(&$data){
+            'action'=> static function(){
                     Artisan::call('cache:clear');
                     return true;
             },

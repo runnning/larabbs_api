@@ -16,7 +16,7 @@ class CalculateActiveUser extends Command
     protected $description = '生成活跃用户';
 
     //最终执行方法
-    public function handle(User $user)
+    public function handle(User $user): void
     {
         //最终执行的方法
         $this->info('开始计算...');

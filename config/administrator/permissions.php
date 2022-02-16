@@ -6,26 +6,26 @@ return [
     'single'=>'权限',
     'model'=>Permission::class,
 
-    'permission'=>function(){
-        return Auth::user()->can('manage_users');
+    'permission'=> static function(){
+        return Auth::user()?->can('manage_users');
     },
 
     // 对 CRUD 动作的单独权限控制，通过返回布尔值来控制权限。
     'action_permissions'=>[
         // 控制『新建按钮』的显示
-        'create'=>function($model){
+        'create'=> static function($model){
             return true;
         },
         //允许更新
-        'update'=>function($model){
-            return true;
+        'update'=> static function($model){
+            return false;
         },
         //不允许删除
-        'delete'=>function($model){
+        'delete'=> static function($model){
             return false;
         },
         //允许查看
-        'view'=>function($model){
+        'view'=> static function($model){
             return true;
         },
     ],
@@ -35,7 +35,7 @@ return [
             'title'=>'ID',
         ],
         'name'=>[
-            'title'=>'标示',
+            'title'=>'权限',
         ],
         'operation'=>[
             'title'=>'管理',
@@ -45,7 +45,7 @@ return [
 
     'edit_fields'=>[
         'name'=>[
-            'title'=>'标示(请慎重修改)',
+            'title'=>'权限(请慎重修改)',
             // 表单条目标题旁的『提示信息』
             'hint'=>'修改权限标识会影响代码的调用,请不要轻易更改。'
         ],
@@ -58,7 +58,7 @@ return [
 
     'filters'=>[
         'name'=>[
-          'title'=>'标示',
+          'title'=>'权限',
         ],
     ],
 ];

@@ -22,7 +22,7 @@ class TopicsController extends Controller
 	public function index(Request $request,Topic $topic,User $user,Link $link)
 	{
             $topics =$topic->withOrder($request->order)
-                ->with('user','category')//预加载n+1问题
+                ->with('user','category')//预加载防止n+1问题
                 ->paginate(20);
             //缓存从读取数据
             $active_users=$user->getActiveUsers();
@@ -34,7 +34,7 @@ class TopicsController extends Controller
     public function show(Request $request,Topic $topic)
     {
         //URL矫正
-        if(!empty($topic->slug)&&$topic->slug!=$request->slug){
+        if(!empty($topic->slug)&&$topic->slug!==$request->slug){
             return redirect($topic->link(),301);
         }
         return view('topics.show', compact('topic'));
@@ -43,11 +43,11 @@ class TopicsController extends Controller
 	public function create(Topic $topic)
 	{
 	    $categories=Category::all();
-		return view('topics.create_and_edit', compact('topic','categories'));
+		  return view('topics.create_and_edit', compact('topic','categories'));
 	}
 
-	public function store(TopicRequest $request,Topic $topic)
-	{
+	public function store(TopicRequest $request,Topic $topic): \Illuminate\Http\RedirectResponse
+  {
         $topic->fill($request->all());
         $topic->user_id = Auth::id();
         $topic->save();
@@ -55,23 +55,32 @@ class TopicsController extends Controller
 		return redirect()->to($topic->link())->with('success', '帖子创建成功！');
 	}
 
-	public function edit(Topic $topic)
+  /**
+   * @throws \Illuminate\Auth\Access\AuthorizationException
+   */
+  public function edit(Topic $topic)
 	{
         $this->authorize('update', $topic);
         $categories=Category::all();
 		return view('topics.create_and_edit', compact('topic','categories'));
 	}
 
-	public function update(TopicRequest $request, Topic $topic)
-	{
+  /**
+   * @throws \Illuminate\Auth\Access\AuthorizationException
+   */
+  public function update(TopicRequest $request, Topic $topic): \Illuminate\Http\RedirectResponse
+  {
 		$this->authorize('update', $topic);
 		$topic->update($request->all());
 
 		return redirect()->to($topic->link())->with('success', '更新成功！');
 	}
 
-	public function destroy(Topic $topic)
-	{
+  /**
+   * @throws \Illuminate\Auth\Access\AuthorizationException
+   */
+  public function destroy(Topic $topic): \Illuminate\Http\RedirectResponse
+  {
 		$this->authorize('destroy', $topic);
 		$topic->delete();
 

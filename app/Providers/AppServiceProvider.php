@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
+    public function register():void
     {
         if(app()->isLocal()){
             $this->app->register(\VIACreative\SudoSu\ServiceProvider::class);
@@ -32,15 +32,16 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-	{
+    public function boot(): void
+    {
         //注册模型事件 必须对应相应的模型
         User::observe(UserObserver::class);
         Topic::observe(TopicObserver::class);
         Reply::observe(ReplyObserver::class);
         Link::observe(LinkObserver::class);
+        //bootstrap样式
         \Illuminate\Pagination\Paginator::useBootstrap();
-
+        //响应去除Data
         JsonResource::withoutWrapping();
     }
 }

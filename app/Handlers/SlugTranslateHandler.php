@@ -51,18 +51,34 @@ class SlugTranslateHandler
         //发送Http Get请求
         $response=$http->get($api.$query);
 
-        $result=json_decode($response->getBody(),true);
-        
+        $result= json_decode($response->getBody(), true, 512, JSON_THROW_ON_ERROR);
 
+      /**
+      获取结果，如果请求成功，dd($result) 结果如下：
+      array:3 [▼
+      "from" => "zh"
+      "to" => "en"
+      "trans_result" => array:1 [▼
+      0 => array:2 [▼
+      "src" => "XSS 安全漏洞"
+      "dst" => "XSS security vulnerability"
+          ]
+        ]
+      ]
+       **/
 
         //尝试获取翻译结果
         if(isset($result['trans_result'][0]['dst'])){
             return Str::slug($result['trans_result'][0]['dst']);
-        }else{
-            //如果百度翻译没有结果，使用拼音作为后备计划
-            return $this->pinyin($text);
         }
+
+          //如果百度翻译没有结果，使用拼音作为后备计划
+          return $this->pinyin($text);
     }
+
+    /**
+     * 后备翻译
+    */
     public function pinyin($text): string
     {
        return Str::slug(app(Pinyin::class)->permalink($text));

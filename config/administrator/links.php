@@ -8,9 +8,9 @@ return[
     'model'=>Link::class,
 
     //访问权限判断
-    'permission'=>function(){
+    'permission'=> static function(){
         //只允许站长管理资源推荐
-        return Auth::user()->hasRole('Founder');
+        return Auth::user()?->hasRole('Founder');
     },
     'columns'=>[
         'id'=>[
